@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HTML & CSS</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <!--Stylesheet-->
+    <link rel="stylesheet" href="css/login_style.css">
+    <!-- <script type="module" defer src="google.js"></script> -->
+    <script type="module" defer src="login/login.js"></script>
+    <script type="module" defer src="login/google.js"></script>
+    <script type="module" defer src="login/facebook.js"></script>
+
+    <!--scripts-->
+    <!-- <script type="module" defer src="facebook.js"></script> -->
+
+    <!--fevicon-->
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+</head>
+
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <form>
+        <h3>Login Here</h3>
+
+        <label for="username">Username</label>
+        <input type="email" placeholder="Email or Phone" id="email" required>
+
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" id="password" required>
+     
+        <button id="submit" type="submit">Log In</button>
+        <p class="forgot-password"><a href="#" id="forgot-password">Forgot Password?</a></p>
+
+        <div class="social">
+            <div class="go" id="google"> <i class="fab fa-google" style="margin-right: 8px;"></i> Sign in with Google </div>
+            <!-- <div class="fb" id="facebook"><i class="fab fa-facebook"  style="margin-right: 8px;"></i> Facebook</div> -->
+
+        </div>
+        <button onclick="skip()">Skip Login For Now</button>
+       
+
+        <div class="form">
+            <p>Don't have an account?
+                <span> <a href="register.html">Sign Up</a></span>
+            </p>
+        </div>
+
+        <script>
+            function skip() {
+                window.location.href = 'quiz-selection.html';
+            }
+        </script>
+
+    </form>
+</body>
+
+</html>

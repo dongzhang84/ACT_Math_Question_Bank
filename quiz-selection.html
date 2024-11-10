@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script type="module" src="login/checkAuth.js"></script> -->
+    <title>Select Quiz Length</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 3em;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        button {
+            font-size: 3em;
+            padding: 10px 40px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        /* Media query for screens smaller than 600px wide */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 8vw; /* Larger font size on smaller screens */
+            }
+            h2 {
+                font-size: 6vw; /* Larger font size on smaller screens */
+            }
+            button {
+                font-size: 6vw; /* Larger font size on smaller screens */
+                padding: 8px 20px;
+            }
+        }
+    </style>
+    <!-- <script src="globalVariables.js"></script>
+    <script src="questionManager.js"></script> -->
+</head>
+<body>
+    <h1>How Many Questions </h1>
+    <h2>Would You Like to Answer?</h2>
+    <h2></h2><h2></h2>
+    <div class="button-container">
+        <button onclick="goToTopicSelection()">Topic-Based Questions</button>
+        <h2></h2>
+        <button onclick="startQuiz(15)">15 General Questions</button>
+        <h2></h2>
+        <button onclick="startQuiz(30)">30 General Questions</button>
+    </div>
+
+    <script>
+        function goToTopicSelection() {
+            // You can store any necessary session data here, if needed
+            window.location.href = 'topic-selection.html';  // Navigate to the topic selection page
+        }
+        
+        function startQuiz(questionCount) {
+            sessionStorage.setItem('quizLength', questionCount);
+            console.log('Quiz length set to:', questionCount); // For debugging
+            initializeQuiz();
+        }
+
+        function initializeQuiz() {
+            // Reset quiz state
+            localStorage.removeItem('seenQuestions');
+            localStorage.removeItem('correctAnswers');
+            localStorage.removeItem('totalAnswered');
+            localStorage.removeItem('topicScores');
+            localStorage.removeItem('currentQuestionIndex');
+            localStorage.removeItem('wrongAnswers');
+            
+            // Generate new ProblemList and start quiz
+            getProblemList().then(() => {
+                localStorage.setItem('currentQuestionIndex', '0');
+                loadNextQuestion();
+            });
+        }
+    </script>
+    <!-- Move these script tags here, just before the closing body tag -->
+    <script src="globalVariables.js"></script>
+    <script src="questionManager.js"></script>
+</body>
+</html>

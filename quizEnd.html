@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result</title>
+    <script src="questionManager.js"></script>
+    <!-- <script type="module" src="login/checkAuth.js"></script> -->
+    <script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/1ec5f39afb1c5f526f36a9a0a/a941dccb8f70ded15fcf2ba98.js");</script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 2em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        table {
+            border-collapse: collapse;
+            width: auto;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        td:first-child {
+            text-align: left;
+        }
+        th:first-child, #wrongProblemsTable th:first-child {
+            width: 60%;
+        }
+        #wrongProblems table {
+            width: 100%; /* Changed from 120% to 100% to avoid overflow */
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        button {
+            font-size: 2em;
+            padding: 10px 40px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 350px;
+            margin-top: 30px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #wrongProblems table {
+            margin-top: 20px;
+        }
+        #finalScore {
+            font-size: 2.4em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        /* Media query for screens smaller than 600px wide */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 8vw; /* Larger font size on smaller screens */
+            }
+            h2 {
+                font-size: 6vw; /* Larger font size on smaller screens */
+            }
+            button {
+                font-size: 6vw; /* Larger font size on smaller screens */
+                padding: 8px 20px;
+                max-width: 60%;
+            }
+            #finalScore {
+                font-size: 6vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Result</h1>
+
+    <div id="finalScore"></div>
+    <div id="topicScores"></div>
+    <div id="unknownProblems"></div>
+
+    <h2>Wrong Answers</h2>
+    <div id="wrongProblems">
+        <table id="wrongProblemsTable">
+            <colgroup>
+                <col style="width: 100%;">
+                <col style="width: 30%;">
+                <col style="width: 30%;">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Topic</th>
+                    <th>Problem_ID</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Wrong problems will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <button onclick="resetQuiz()">Restart Test</button>
+    <button onclick="giveFeedback()">Share Feedback</button>
+
+    <script>
+        function giveFeedback() {
+            window.location.href = 'https://forms.gle/8y5623jVte7mUmT8A';
+        }
+
+        function resetQuiz() {
+            // console.log('Before clearing: quizLength =', sessionStorage.getItem('quizLength'));  // Log the value before clearing
+
+            // Clear stored data
+            sessionStorage.clear();  // This should remove everything, including quizLength
+            // console.log('After clearing sessionStorage: quizLength =', sessionStorage.getItem('quizLength'));
+
+            // Reset global ProblemList variable to null
+            window.ProblemList = null;
+
+            // Redirect to the quiz selection page or homepage
+            window.location.href = 'quiz-selection.html';
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const correctAnswers = parseInt(localStorage.getItem('correctAnswers') || '0');
+            const totalAnswered = parseInt(localStorage.getItem('totalAnswered') || '0');
+            const topicScores = getTopicScores();
+
+            const finalScoreElement = document.getElementById('finalScore');
+            finalScoreElement.textContent = `Final Score: ${correctAnswers}/${totalAnswered}`;
+
+            const topicScoresElement = document.getElementById('topicScores');
+            const table = document.createElement('table');
+            const headerRow = table.insertRow();
+            ['Topic', 'Correct', 'Total', 'Percentage'].forEach(text => {
+                const th = document.createElement('th');
+                th.textContent = text;
+                headerRow.appendChild(th);
+            });
+
+            const orderedTopics = [
+                "Algebra",
+                "Advanced Math",
+                "Problem-Solving and Data Analysis",
+                "Geometry and Trigonometry",
+            ];
+
+            orderedTopics.forEach(topic => {
+                if (topicScores[topic]) {
+                    const row = table.insertRow();
+                    const scores = topicScores[topic];
+                    const correctScore = scores.correct || 0;
+                    const totalAttempts = scores.total || 0;
+                    const percentage = totalAttempts > 0 ? (correctScore / totalAttempts * 100).toFixed(2) : '0.00';
+                    
+                    [topic, correctScore, totalAttempts, `${percentage}%`].forEach(text => {
+                        const cell = row.insertCell();
+                        cell.textContent = text;
+                    });
+                }
+            });
+
+            topicScoresElement.appendChild(table);
+
+            // Display unknown problems
+            const unknownProblemsElement = document.getElementById('unknownProblems');
+            if (topicScores.Unknown && topicScores.Unknown.problems) {
+                unknownProblemsElement.innerHTML = `<h3>Unknown Category Problems:</h3>
+                    <p>The following problems could not be categorized: ${topicScores.Unknown.problems.join(', ')}</p>`;
+            }
+
+            // Display wrong problems
+            displayWrongProblems();
+        });
+
+        function displayWrongProblems() {
+            const wrongAnswers = JSON.parse(localStorage.getItem('wrongAnswers') || '[]');
+            const tableBody = document.querySelector('#wrongProblemsTable tbody');
+            
+            wrongAnswers.forEach(wrong => {
+                const row = tableBody.insertRow();
+                row.insertCell(0).textContent = wrong.topic;
+                row.insertCell(1).textContent = wrong.problemNumber;
+                const linkCell = row.insertCell(2);
+                const link = document.createElement('a');
+                // link.href = `https://acerocket-sat-math.netlify.app/practice/prob${wrong.problemNumber.toString().padStart(3, '0')}.html`;
+                link.href = `practice/${wrong.problemNumber.toString()}.html`;
+                link.textContent = 'Review';
+                link.target = '_blank';
+                linkCell.appendChild(link);
+            });
+
+            // Hide the wrong problems section if there are no wrong answers
+            const wrongProblemsSection = document.getElementById('wrongProblems');
+            if (wrongAnswers.length === 0) {
+                wrongProblemsSection.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
