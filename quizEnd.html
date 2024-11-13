@@ -46,8 +46,11 @@
         td:first-child {
             text-align: left;
         }
-        th:first-child, #wrongProblemsTable th:first-child {
+        th:first-child {
             width: 60%;
+        }
+        #wrongProblemsTable th:first-child {
+            width: 55%;
         }
         #wrongProblems table {
             width: 100%; /* Changed from 120% to 100% to avoid overflow */
@@ -96,7 +99,7 @@
     </style>
 </head>
 <body>
-    <h1>Test Result</h1>
+    <h1>Result</h1>
 
     <div id="finalScore"></div>
     <div id="topicScores"></div>
@@ -105,16 +108,16 @@
     <h2>Wrong Answers</h2>
     <div id="wrongProblems">
         <table id="wrongProblemsTable">
-            <colgroup>
+            <!-- <colgroup>
                 <col style="width: 100%;">
                 <col style="width: 30%;">
                 <col style="width: 30%;">
-            </colgroup>
+            </colgroup> -->
             <thead>
                 <tr>
                     <th>Topic</th>
                     <th>Problem_ID</th>
-                    <th>Link</th>
+                    <th>Problem Link</th>
                 </tr>
             </thead>
             <tbody>
@@ -123,7 +126,7 @@
         </table>
     </div>
 
-    <button onclick="resetQuiz()">Restart Test</button>
+    <button onclick="resetQuiz()"> Back to Home </button>
     <button onclick="giveFeedback()">Share Feedback</button>
 
     <script>
@@ -142,7 +145,7 @@
             window.ProblemList = null;
 
             // Redirect to the quiz selection page or homepage
-            window.location.href = 'quiz-selection.html';
+            window.location.href = 'session-selection.html';
         }
     </script>
 
@@ -211,7 +214,7 @@
                 const link = document.createElement('a');
                 // link.href = `https://acerocket-sat-math.netlify.app/practice/prob${wrong.problemNumber.toString().padStart(3, '0')}.html`;
                 link.href = `practice/${wrong.problemNumber.toString()}.html`;
-                link.textContent = 'Review';
+                link.textContent = 'Practice Again';
                 link.target = '_blank';
                 linkCell.appendChild(link);
             });

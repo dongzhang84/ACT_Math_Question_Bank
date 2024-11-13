@@ -31,7 +31,7 @@ facebook.addEventListener("click", function (event) {
    const credential = FacebookAuthProvider.credentialFromResult(result);
    const accessToken = credential.accessToken;
 
-   window.location.href = "quiz-selection.html";
+   window.location.href = "session-selection.html";
 
    // IdP data available using getAdditionalUserInfo(result)
    // ...

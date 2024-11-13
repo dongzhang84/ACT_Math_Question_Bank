@@ -60,16 +60,23 @@
     <script src="questionManager.js"></script> -->
 </head>
 <body>
-    <h1>How Many Questions </h1>
-    <h2>Would You Like to Answer?</h2>
+    <!-- <h1>How Many Questions </h1> -->
+    <h1> Would You Like to: </h1>
+    <h2> take a mock exam? </h2>
+    <h2> or practice specific topics? </h2>
     <h2></h2><h2></h2>
     <div class="button-container">
-        <button onclick="startQuiz(15)">15 General Questions</button>
+        <button onclick="goToQuizSelection()">Mock Exams</button>
         <h2></h2>
-        <button onclick="startQuiz(30)">30 General Questions</button>
+        <button onclick="goToTopicSelection()">Topic-Based Practice</button>
     </div>
 
     <script>
+        function goToQuizSelection() {
+            // You can store any necessary session data here, if needed
+            window.location.href = 'quiz-selection.html';  // Navigate to the topic selection page
+        }
+
         function goToTopicSelection() {
             // You can store any necessary session data here, if needed
             window.location.href = 'topic-selection.html';  // Navigate to the topic selection page

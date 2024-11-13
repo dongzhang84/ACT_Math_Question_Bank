@@ -51,7 +51,7 @@ submit.addEventListener("click", function (event) {
             const user = userCredential.user;
             // alert("logging in...");
             setTimeout(() => {
-                window.location.href = "quiz-selection.html";
+                window.location.href = "session-selection.html";
             }, 300); // 300ms delay
             // ...
         })

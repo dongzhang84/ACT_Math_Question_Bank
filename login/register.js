@@ -49,7 +49,7 @@ submit.addEventListener("click", function (event) {
             const user = userCredential.user;
             //alert("Creating Account.....");
             setTimeout(() => {
-                window.location.href = "quiz-selection.html";
+                window.location.href = "session-selection.html";
             }, 500); // 500ms delay
             // ...
         })

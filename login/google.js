@@ -29,7 +29,7 @@ google.addEventListener("click", function () {
    const token = credential.accessToken;
    // The signed-in user info.
    const user = result.user;
-   window.location.href = "quiz-selection.html";
+   window.location.href = "session-selection.html";
   }).catch((error) => {
    // Handle Errors here.
    const errorCode = error.code;
